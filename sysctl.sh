@@ -1,8 +1,11 @@
 #!/bin/bash
+#
 
-cat > sysctl.conf <<EOF
+sysctl_file=/etc/sysctl.d/99-sysctl.conf
+
+cat > $sysctl_file <<EOF
 # maximum number of open files/file descriptors
-fs.file-max = 4194303
+fs.file-max = 9223372036854775807
 
 # use as little swap space as possible
 vm.swappiness = 1
@@ -11,7 +14,7 @@ vm.swappiness = 1
 vm.vfs_cache_pressure = 50
 
 # minimum free memory
-vm.min_free_kbytes = 1000000
+vm.min_free_kbytes = 524288
 
 # follow mellanox best practices https://community.mellanox.com/s/article/linux-sysctl-tuning
 # the following changes are recommended for improving IPv4 traffic performance by Mellanox
@@ -72,7 +75,7 @@ net.ipv4.tcp_mtu_probing = 1
 EOF
 
 echo "Enabling system level tuning params"
-sysctl --quiet --load sysctl.conf && rm -f sysctl.conf
+sysctl --quiet --load $sysctl_file
 
 # `Transparent Hugepage Support`*: This is a Linux kernel feature intended to improve
 # performance by making more efficient use of processor’s memory-mapping hardware.
