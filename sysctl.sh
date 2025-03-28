@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 
-sysctl_file=/etc/sysctl.d/99-sysctl.conf
+sysctl_file=/etc/sysctl.d/99-minio.conf
 
 cat > $sysctl_file <<EOF
 # maximum number of open files/file descriptors
